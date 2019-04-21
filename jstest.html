@@ -22,13 +22,18 @@
     </select>
 
 </form>
-<button  class="button" id="button1" data-set_id='1'>Button1</button>
-<button class="button" d="button2" data-set_id='2'>Button2</button>
+<button class="button" id="button1" data-set_id='1'>Button1</button>
+<button class="button" id="button2" data-set_id='2'>Button2</button>
 
 </body>
 </html>
 
 <script type="text/javascript">
+
+    function UniqueArray(value, index, self) {
+        return self.indexOf(value) === index;
+    }
+
     var Set1 = {
         age: 25, speed: 55, color: 'red', fruit: {apple: true, orange: false, watermelon: true, peach: false}
     };
@@ -43,64 +48,70 @@
     Array.push(Set2);
 
     var Form = {
-            id: 'form',
-            colorCollection: [],
-            radioCollection: '',
-            // data: {},
-            form: document.getElementById(this.id),
-            age: document.getElementsByName('age')[0],
-            speed: document.getElementsByName('speed')[0],
-            color: document.getElementsByName('color')[0],
-            fruit: document.getElementsByName('fruit')[0],
+        id: 'form',
+        colorCollection: [],
+        radioCollection: '',
+        // data: {},
+        form: document.getElementById(this.id),
+        age: document.getElementsByName('age')[0],
+        speed: document.getElementsByName('speed')[0],
+        color: document.getElementsByName('color')[0],
+        fruit: document.getElementsByName('fruit')[0],
 
-            fillData: function (collection, setNumber) {
+        fillData: function (collection, setNumber) {
+            this.data = collection[setNumber];
+            if (this.data) {
+                this.age.value = this.data.age;
+                this.speed.value = this.data.speed;
+                this.checkRadio(this.data.color);
+                this.fillFruitSelectOptions();
+            } else console.log('NO DATA')
 
-                this.data = collection[setNumber];
-                if (this.data) {
-                    this.age.value = this.data.age;
-                    this.speed.value = this.data.speed;
-                    this.checkRadio(this.data.color);
-                    this.fillFruitSelectOptions();
-                } else console.log('NO DATA')
+        },
 
-            },
+        initAllColorsRange: function (collection) {
+            for (let i = 0; i < collection.length; i++) {
+                this.colorCollection.push(collection[i].color);
+            }
+            let uniqueCollection = this.colorCollection.filter(UniqueArray);
+            if (uniqueCollection) {
+                for (let i = 0; i < uniqueCollection.length; i++) {
+                    this.radioCollection += "<input type='radio' id='" + uniqueCollection[i] + "' name='color'>" + uniqueCollection[i] + "<br>";
 
-            initAllColorsRange: function (collection) {
-
-                for (var i = 0; i < collection.length; i++) {
-                    this.colorCollection.push(collection[i].color);
-                    this.radioCollection += "<input type='radio' id='" + collection[i].color + "' name='color'>" + collection[i].color + "<br>";
                 }
-                document.getElementById('color_group').innerHTML = this.radioCollection;
-
-
-            },
-
-            checkRadio: function (name) {
-                document.getElementById(name).checked = true;
-            },
-            renderOption(name, isSelected) {
-                if (isSelected === true) isSelected = ' selected'; else isSelected = '';
-
-                return '<option value="' + name + '"' + isSelected + '>' + name + "</option>";
-            },
-
-            fillFruitSelectOptions: function () {
-                let fruitsOptions = '';
-                let fruit = this.data.fruit;
-                if (typeof fruit == "object") {
-                    for (var name in fruit) {
-                        if (fruit.hasOwnProperty(name)) {
-                            fruitsOptions += this.renderOption(name, fruit[name])
-                        }
-                    }
-                }
-                this.fruit.innerHTML = fruitsOptions;
 
             }
 
+            document.getElementById('color_group').innerHTML = this.radioCollection;
+
+
+        },
+
+
+        checkRadio: function (name) {
+            document.getElementById(name).checked = true;
+        },
+        renderOption(name, isSelected) {
+            if (isSelected === true) isSelected = ' selected'; else isSelected = '';
+
+            return '<option value="' + name + '"' + isSelected + '>' + name + "</option>";
+        },
+
+        fillFruitSelectOptions: function () {
+            let fruitsOptions = '';
+            let fruit = this.data.fruit;
+            if (typeof fruit == "object") {
+                for (var name in fruit) {
+                    if (fruit.hasOwnProperty(name)) {
+                        fruitsOptions += this.renderOption(name, fruit[name])
+                    }
+                }
+            }
+            this.fruit.innerHTML = fruitsOptions;
+
         }
-    ;
+
+    };
 
 
     // initialisation Set 1 on document load
@@ -124,8 +135,6 @@
     button2.addEventListener('click', function () {
         Form.fillData(Array, 1);
     });
-
-
 
 
 </script>
