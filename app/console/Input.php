@@ -22,8 +22,8 @@ class Input
     }
 
     protected function parse(){
-        $this->type = $this->argv[1];
-        $this->processName = $this->argv[2];
+        if (isset($this->argv[1])) $this->type = $this->argv[1];
+        if (isset($this->argv[2])) $this->processName = $this->argv[2];
     }
 
     public function log() {

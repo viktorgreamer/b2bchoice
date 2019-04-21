@@ -10,7 +10,7 @@ namespace app\console;
 
 
 use app\console\helper\Decorator;
-use app\exceptions\WrongRequestNameException;
+use app\exceptions\WrongRequestException;
 
 class Dispatcher
 {

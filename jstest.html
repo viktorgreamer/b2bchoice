@@ -2,9 +2,130 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Javascript test</title>
 </head>
 <body>
+<h3>Form</h3>
+<form id="form">
+    <label>Age</label>
+    <input type="text" name="age"><br>
+    <label>Speed</label>
+    <input type="text" name="speed"><br>
+    <label>Color</label>
+    <fieldset id="color_group">
+        <!-- <input type="radio" id='green' name="color">Green<br>
+         <input type="radio" id='red' name="color">Red<br>-->
+    </fieldset>
+
+    <label>Fruit</label>
+    <select name="fruit" multiple>
+    </select>
+
+</form>
+<button  class="button" id="button1" data-set_id='1'>Button1</button>
+<button class="button" d="button2" data-set_id='2'>Button2</button>
 
 </body>
 </html>
+
+<script type="text/javascript">
+    var Set1 = {
+        age: 25, speed: 55, color: 'red', fruit: {apple: true, orange: false, watermelon: true, peach: false}
+    };
+    var Set2 = {
+        age: 35,
+        speed: 45,
+        color: 'green',
+        fruit: {apple: false, banana: true, blueberry: false, strawberry: true, kiwi: false}
+    };
+    var Array = [];
+    Array.push(Set1);
+    Array.push(Set2);
+
+    var Form = {
+            id: 'form',
+            colorCollection: [],
+            radioCollection: '',
+            // data: {},
+            form: document.getElementById(this.id),
+            age: document.getElementsByName('age')[0],
+            speed: document.getElementsByName('speed')[0],
+            color: document.getElementsByName('color')[0],
+            fruit: document.getElementsByName('fruit')[0],
+
+            fillData: function (collection, setNumber) {
+
+                this.data = collection[setNumber];
+                if (this.data) {
+                    this.age.value = this.data.age;
+                    this.speed.value = this.data.speed;
+                    this.checkRadio(this.data.color);
+                    this.fillFruitSelectOptions();
+                } else console.log('NO DATA')
+
+            },
+
+            initAllColorsRange: function (collection) {
+
+                for (var i = 0; i < collection.length; i++) {
+                    this.colorCollection.push(collection[i].color);
+                    this.radioCollection += "<input type='radio' id='" + collection[i].color + "' name='color'>" + collection[i].color + "<br>";
+                }
+                document.getElementById('color_group').innerHTML = this.radioCollection;
+
+
+            },
+
+            checkRadio: function (name) {
+                document.getElementById(name).checked = true;
+            },
+            renderOption(name, isSelected) {
+                if (isSelected === true) isSelected = ' selected'; else isSelected = '';
+
+                return '<option value="' + name + '"' + isSelected + '>' + name + "</option>";
+            },
+
+            fillFruitSelectOptions: function () {
+                let fruitsOptions = '';
+                let fruit = this.data.fruit;
+                if (typeof fruit == "object") {
+                    for (var name in fruit) {
+                        if (fruit.hasOwnProperty(name)) {
+                            fruitsOptions += this.renderOption(name, fruit[name])
+                        }
+                    }
+                }
+                this.fruit.innerHTML = fruitsOptions;
+
+            }
+
+        }
+    ;
+
+
+    // initialisation Set 1 on document load
+    document.addEventListener("DOMContentLoaded", function () {
+        // this method used for initialization all range of available colors in Array
+        Form.initAllColorsRange(Array);
+        // accept Array and index of Set (current 0) in Array
+        Form.fillData(Array, 0);
+
+    });
+
+    // adding event listener on click button1
+    button1 = document.getElementById('button1');
+    button1.addEventListener('click', function () {
+
+        Form.fillData(Array, 0);
+    });
+
+    // adding event listener on click button2
+    button2 = document.getElementById('button2');
+    button2.addEventListener('click', function () {
+        Form.fillData(Array, 1);
+    });
+
+
+
+
+</script>

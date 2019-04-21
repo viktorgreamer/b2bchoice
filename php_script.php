@@ -7,7 +7,7 @@ use app\console\Input;
 use app\console\Threads;
 
 
-require __DIR__ . '\autoload.php';
+require __DIR__ . '/autoload.php';
 
 $input = new Input($argv);
 
