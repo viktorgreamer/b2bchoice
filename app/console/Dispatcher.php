@@ -21,25 +21,38 @@ class Dispatcher
 
     public $input;
     public $type;
-    public $name;
+    public $number;
 
     public function __construct(Input $input)
     {
 
         $this->input = $input;
-        $this->make();
+
+        if (($this->input->type === self::TYPE_THREAD) || ($this->input->type === self::TYPE_MCP)) {
+            $this->type = $this->input->type;
+
+        } else throw new WrongRequestException(" Unknown request type '" . $this->input->type . "'");
+        $this->number = $this->input->processName;
+
 
     }
 
-    protected function make(){
-        if (($this->input->type === self::TYPE_THREAD) ||($this->input->type === self::TYPE_MCP)) {
-          $this->type =   $this->input->type;
-
-        } else throw new WrongRequestException(" Unknown request type '".$this->input->type."'");
-    }
-
-    public function getTypeRequest(){
+    public function getTypeRequest()
+    {
         return $this->input->type;
+    }
+
+    public function resolver()
+    {
+        if ($this->type == self::TYPE_THREAD) {
+            $thread = new Threads($this->number);
+            $thread->run();
+        } else {
+            $worker = new MyWorker($this->number);
+            $worker->isRunning();
+
+
+        }
     }
 
 }

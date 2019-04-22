@@ -13,10 +13,3 @@ $input = new Input($argv);
 
 
 $dispatcher = new Dispatcher($input);
-
-new Threads('dsdfsd');
-
-/*foreach ([1,5] as $loop) {
-    sleep(4);
-}*/
-

@@ -9,8 +9,13 @@
 namespace app\console;
 
 
-class Threads extends \Thread
+use app\console\helper\Decorator;
+
+class Threads extends \Threaded
 {
+
+    const LOOP_COUNT = 5;
+    const SLEEP_DURATION = 1;
     public $name;
     public $i;
 
@@ -21,10 +26,11 @@ class Threads extends \Thread
 
     public function run()
     {
+        Decorator::success($this->name." WAS STARTED");
         $count = 0;
-        while ($count < 5) {
-            echo $this->name;
-            sleep(1);
+        while ($count < self::LOOP_COUNT) {
+            Decorator::success($count);
+            sleep(self::SLEEP_DURATION);
             $count++;
         }
     }
