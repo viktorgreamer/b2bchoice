@@ -11,7 +11,7 @@ namespace app\console;
 
 use app\console\helper\Decorator;
 
-class Threads extends \Threaded
+class Threads extends \Thread
 {
 
     const LOOP_COUNT = 5;
@@ -33,6 +33,8 @@ class Threads extends \Threaded
             sleep(self::SLEEP_DURATION);
             $count++;
         }
+
+        Decorator::success($this->name." WAS FINISHED");
     }
 
 
