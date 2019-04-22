@@ -15,7 +15,7 @@ class Threads extends \Thread
 {
 
     const LOOP_COUNT = 5;
-    const SLEEP_DURATION = 1;
+    const SLEEP_DURATION = 20;
     public $name;
     public $i;
 
