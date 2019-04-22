@@ -26,15 +26,15 @@ class Threads extends \Thread
 
     public function run()
     {
-        Decorator::success($this->name." WAS STARTED");
+        echo Decorator::success($this->name." WAS STARTED");
         $count = 0;
         while ($count < self::LOOP_COUNT) {
-            Decorator::success($count);
+           echo Decorator::success($count);
             sleep(self::SLEEP_DURATION);
             $count++;
         }
 
-        Decorator::success($this->name." WAS FINISHED");
+       echo Decorator::success($this->name." WAS FINISHED");
     }
 
 
