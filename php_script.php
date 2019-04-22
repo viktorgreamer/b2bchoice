@@ -13,3 +13,4 @@ $input = new Input($argv);
 
 
 $dispatcher = new Dispatcher($input);
+$dispatcher->resolver();
