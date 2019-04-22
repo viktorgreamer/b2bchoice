@@ -28,7 +28,7 @@ class TestWork extends Threaded {
         $this->complete = true;
     }
     public function isGarbage() {
-        return $this->complete;
+        return $this->complete === true;
     }
 }
 class ExamplePool extends Pool
