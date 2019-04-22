@@ -48,10 +48,12 @@ class Dispatcher
             $thread = new Threads($this->number);
             $thread->run();
         } else {
-            $worker = new MyWorker($this->number);
-            $worker->isRunning();
+            $pool = new \Pool(8, MyWorker::class);
 
-
+            $pool->collect(function($work){
+                return $work->isComplete();
+            });
+            var_dump($pool);
         }
     }
 

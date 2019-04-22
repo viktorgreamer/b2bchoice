@@ -17,7 +17,7 @@ class Threads extends \Thread
     const LOOP_COUNT = 5;
     const SLEEP_DURATION = 20;
     public $name;
-    public $i;
+    public $isComplete = false;
 
     public function __construct($name)
     {
@@ -29,10 +29,11 @@ class Threads extends \Thread
         echo Decorator::success($this->name." WAS STARTED");
         $count = 0;
         while ($count < self::LOOP_COUNT) {
-           echo Decorator::success($count);
+           echo Decorator::success($count * self::SLEEP_DURATION. " seconds");
             sleep(self::SLEEP_DURATION);
             $count++;
         }
+        $this->isComplete  = true;
 
        echo Decorator::success($this->name." WAS FINISHED");
     }
